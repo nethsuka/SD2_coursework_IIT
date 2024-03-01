@@ -49,7 +49,7 @@ public class Ticket {
 	public void print_ticketInfo() {
 		System.out.println("Row :"+row);
 		System.out.println("Seat :"+seat);
-		System.out.println("Price :"+price);
+		System.out.println("Price :£"+price);
 		person.print_personInfo();
 
 	}
