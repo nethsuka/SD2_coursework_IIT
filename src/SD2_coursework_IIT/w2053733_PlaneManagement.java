@@ -4,16 +4,12 @@ import java.util.Scanner;
 
 public class w2053733_PlaneManagement {
 	
-	static Scanner input = new Scanner(System.in);
-
-	
-	public static String Enter_str(String txt) {
-		Scanner strObj = new Scanner(System.in);
+	public static String Enter_str(String txt,Scanner input) {
 		while(true) {
 			try {
 				String[] rowLetterList = {"A","B","C","D"};
 				System.out.print(txt);
-				String letter = strObj.next().toUpperCase();
+				String letter = input.next().toUpperCase();
 				for(String item : rowLetterList) {
 					if(item.equals(letter)) {
 						return letter;
@@ -22,19 +18,20 @@ public class w2053733_PlaneManagement {
 				System.out.println("Please enter a valid letter");
 			}catch(Exception e) {
 				System.out.println(e);
+				input.nextLine();
 			}
 		}
 	}
 	
-	public static int Enter_int(String txt) {
+	public static int Enter_int(String txt,Scanner input) {
 		while(true) {
 			try {
-				Scanner intObj = new Scanner(System.in);
 					System.out.print(txt);
-					int num = intObj.nextInt();
+					int num = input.nextInt();
 					return num;
 			}catch(Exception e) {
 				System.out.println("Please enter an intiger");
+				input.nextLine();
 			}
 		}
 	}
@@ -50,7 +47,7 @@ public class w2053733_PlaneManagement {
 		}
 	}
 	
-	public static void buy_seat(String rowLetter,int seatNum,int[][] seatList,Ticket[][] ticketList) {
+	public static void buy_seat(String rowLetter,int seatNum,int[][] seatList,Ticket[][] ticketList,Scanner input) {
 		
 		int row;
 		if(rowLetter.equals("A") && seatList[0][seatNum-1]==0) {
@@ -214,6 +211,8 @@ public class w2053733_PlaneManagement {
 		ticketList[2] = new Ticket[12];
 		ticketList[3] = new Ticket[14];
 		
+		Scanner input = new Scanner(System.in);
+		
 		System.out.println("! Welcome to the Plane Management application ! \n");
 		
 		System.out.println("************************************************\n"
@@ -228,25 +227,24 @@ public class w2053733_PlaneManagement {
 						 + "    0) Quit                                     \n"
 						 + "************************************************\n");
 		
-//		Scanner input = new Scanner(System.in);
+
 		boolean status = true;
 		while(status) {
 		
-			int validOption = Enter_int("Please enter an option :");
+			int validOption = Enter_int("Please enter an option :",input);
 			
 			switch(validOption) {
 			case 1:
-				String validRowLetter = Enter_str("Enter row letter :");
-				int validSeatNum = Enter_int("Enter seat number :");
+				String validRowLetter = Enter_str("Enter row letter :",input);
+				int validSeatNum = Enter_int("Enter seat number :",input);
 				int val = isValidSeat(validRowLetter, validSeatNum);
-				System.out.println(val);
 				if(val==1) {
-					buy_seat(validRowLetter, validSeatNum, planeSeates, ticketList);
+					buy_seat(validRowLetter, validSeatNum, planeSeates, ticketList,input);
 				}
 				break;
 			case 2:
-				String cancelRowLetter = Enter_str("Enter row letter to cancel :");
-				int cancelSeatNum = Enter_int("Enter seat number to cancel :");
+				String cancelRowLetter = Enter_str("Enter row letter to cancel :",input);
+				int cancelSeatNum = Enter_int("Enter seat number to cancel :",input);
 				int val2 = isValidSeat(cancelRowLetter, cancelSeatNum);
 				if(val2==1) {
 					cancel_seat(cancelRowLetter, cancelSeatNum, planeSeates, ticketList);
@@ -262,8 +260,8 @@ public class w2053733_PlaneManagement {
 				print_tickets_info(ticketList);
 				break;
 			case 6:
-				String searchRowLetter = Enter_str("Enter row letter :");
-				int searchSeatNum = Enter_int("Enter seat number :");
+				String searchRowLetter = Enter_str("Enter row letter :",input);
+				int searchSeatNum = Enter_int("Enter seat number :",input);
 				search_ticket(searchRowLetter, searchSeatNum, ticketList);
 				break;
 			case 0:
