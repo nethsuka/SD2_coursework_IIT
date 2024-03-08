@@ -57,7 +57,7 @@ public class Ticket {
 
 	}
 	
-	public void save(String rowLetter, int seatNum, Person person) {
+	public void save(String rowLetter, int seatNum) {
 		try {
 			FileWriter file = new FileWriter(rowLetter+seatNum+".txt");
 			file.write("Row :"+row

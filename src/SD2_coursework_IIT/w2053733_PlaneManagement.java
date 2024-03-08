@@ -91,7 +91,7 @@ public class w2053733_PlaneManagement {
 		Ticket ticket = new Ticket(rowLetter, seatNum, price, person);
 		ticketList[row][seatNum-1] = ticket;
 		
-		ticket.save(rowLetter, seatNum, person);
+		ticket.save(rowLetter, seatNum);
 		
 	}
 	
