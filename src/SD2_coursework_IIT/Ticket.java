@@ -1,5 +1,8 @@
 package SD2_coursework_IIT;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Ticket {
 
 	private String row;
@@ -52,5 +55,22 @@ public class Ticket {
 		System.out.println("Price :£"+price);
 		person.print_personInfo();
 
+	}
+	
+	public void save(String rowLetter, int seatNum, Person person) {
+		try {
+			FileWriter file = new FileWriter(rowLetter+seatNum+".txt");
+			file.write("Row :"+row
+					  +"\nSeat :"+seat
+					  +"\nPrice :"+price
+					  +"\nName :"+person.getName()
+					  +"\nSurname :"+person.getSurname()
+					  +"\nEmail :"+person.getEmail());
+			file.close();
+		}catch(IOException e) {
+			System.out.println("An error occured");
+		}
+		
+		
 	}
 }

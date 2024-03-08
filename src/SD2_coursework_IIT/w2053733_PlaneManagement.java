@@ -80,9 +80,9 @@ public class w2053733_PlaneManagement {
 		
 		Person person = new Person(name, surname, email);
 		int price;
-		if(seatNum-1<=5) {
+		if(seatNum<=5) {
 			price = 200;
-		}else if(seatNum-1<=9) {
+		}else if(seatNum<=9) {
 			price = 150;
 		}else {
 			price = 180;
@@ -90,6 +90,8 @@ public class w2053733_PlaneManagement {
 		
 		Ticket ticket = new Ticket(rowLetter, seatNum, price, person);
 		ticketList[row][seatNum-1] = ticket;
+		
+		ticket.save(rowLetter, seatNum, person);
 		
 	}
 	
