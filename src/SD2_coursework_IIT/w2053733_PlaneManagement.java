@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class w2053733_PlaneManagement {
 	
+	static int row = 0;
+	
 	public static String Enter_str(String txt,Scanner input) {
 		while(true) {
 			try {
@@ -47,24 +49,19 @@ public class w2053733_PlaneManagement {
 		}
 	}
 	
-	public static void buy_seat(String rowLetter,int seatNum,int[][] seatList,Ticket[][] ticketList,Scanner input) {
+	public static void buy_seat(String rowLetter,int seatNum,int[][] seatList,Ticket[] ticketList,Scanner input) {  // should edit
 		
-		int row;
 		if(rowLetter.equals("A") && seatList[0][seatNum-1]==0) {
 			seatList[0][seatNum-1]=1;
-			row = 0;
 			System.out.println("You have successfully booked the seat");
 		}else if(rowLetter.equals("B") && seatList[1][seatNum-1]==0) {
 			seatList[1][seatNum-1]=1;
-			row = 1;
 			System.out.println("You have successfully booked the seat");
 		}else if(rowLetter.equals("C") && seatList[2][seatNum-1]==0){
 			seatList[2][seatNum-1]=1;
-			row = 2;
 			System.out.println("You have successfully booked the seat");
 		}else if(rowLetter.equals("D") && seatList[3][seatNum-1]==0){
 			seatList[3][seatNum-1]=1;
-			row = 3;
 			System.out.println("You have successfully booked the seat");
 		}else {
 			System.out.println("Sorry!, The seat has been already booked");
@@ -89,45 +86,42 @@ public class w2053733_PlaneManagement {
 		}
 		
 		Ticket ticket = new Ticket(rowLetter, seatNum, price, person);
-		ticketList[row][seatNum-1] = ticket;
+		ticketList[row] = ticket;
+		row+=1;
 		
 		ticket.save(rowLetter, seatNum);
 		
 	}
 	
-	public static void cancel_seat(String cancelRowLetter,int cancelSeatNum,int[][] seatList,Ticket[][] ticketList) {
+	public static void cancel_seat(String cancelRowLetter,int cancelSeatNum,int[][] seatList,Ticket[] ticketList) {   // should edit
 		
-		int row;
 		if(cancelRowLetter.equals("A") && seatList[0][cancelSeatNum-1]==1) {
 			seatList[0][cancelSeatNum-1]=0;
-			row = 0;
 			System.out.println("The seat has been cancled sucessfully");
 		}else if(cancelRowLetter.equals("B") && seatList[1][cancelSeatNum-1]==1) {
 			seatList[1][cancelSeatNum-1]=0;
-			row = 1;
 			System.out.println("The seat has been cancled sucessfully");
 		}else if(cancelRowLetter.equals("C") && seatList[2][cancelSeatNum-1]==1){
 			seatList[2][cancelSeatNum-1]=0;
-			row = 2;
 			System.out.println("The seat has been cancled sucessfully");
 		}else if(cancelRowLetter.equals("D") && seatList[3][cancelSeatNum-1]==1){
 			seatList[3][cancelSeatNum-1]=0;
-			row = 3;
 			System.out.println("The seat has been cancled sucessfully");
 		}else {
 			System.out.println("Nothing to cancle,the seats haven't booked");
 			return;
 		}
 		
-		for(Ticket[] ticket_row : ticketList) {
-			for(Ticket ticket_seat : ticket_row) {
-				if(ticket_seat != null) {
-					if(cancelRowLetter.equals(ticket_seat.getRow()) && ticket_seat.getSeat() == cancelSeatNum) {
-						ticketList[row][cancelSeatNum-1] = null;
-					}
+		int index = 0;
+		for(Ticket item : ticketList) {
+			if(item != null) {
+				if(cancelRowLetter.equals(item.getRow()) && item.getSeat() == cancelSeatNum) {
+					break;
 				}
 			}
+			index+=1;
 		}
+		ticketList[index] = null;
 		
 	}
 	
@@ -162,17 +156,16 @@ public class w2053733_PlaneManagement {
 		System.out.println();
 	}
 	
-	public static void print_tickets_info(Ticket[][] ticketList) {
+	public static void print_tickets_info(Ticket[] ticketList) {   // should edit
 		int sumOfTicketPrice = 0;
-		for(Ticket[] ticket_row : ticketList) {
-			for(Ticket ticket_seat : ticket_row) {
-				if(ticket_seat != null) {
-					ticket_seat.print_ticketInfo();
-					sumOfTicketPrice += ticket_seat.getPrice();
-					System.out.println("----------------------------------");
-				}
+		for(Ticket item : ticketList) {
+			if(item != null) {
+				item.print_ticketInfo();
+				sumOfTicketPrice += item.getPrice();
+				System.out.println("----------------------------------");
 			}
 		}
+		
 		if(sumOfTicketPrice==0) {
 			System.out.println("There is no ticket information to display.");
 		}else {
@@ -180,21 +173,23 @@ public class w2053733_PlaneManagement {
 		}
 	}
 	
-	public static void search_ticket(String rowLetter, int seatNum,Ticket[][] ticketList) {
-		for(Ticket[] ticket_row : ticketList) {
-			for(Ticket ticket_seat : ticket_row) {
-				if(ticket_seat != null) {
-					if(rowLetter.equals(ticket_seat.getRow()) && ticket_seat.getSeat() == seatNum) {
-						System.out.println("----------------------------------");
-						ticket_seat.print_ticketInfo();
-						System.out.println("----------------------------------");
-						return;
-					}else {
-						System.out.println("This seat is available");
-						return;
-					}
+	public static void search_ticket(String rowLetter, int seatNum,Ticket[] ticketList) {   // should edit	
+		int index = 0;
+		for(Ticket item : ticketList) {
+			if(item!=null) {
+				if(rowLetter.equals(ticketList[index].getRow()) && ticketList[index].getSeat()==seatNum){
+					break;
 				}
 			}
+			index+=1;
+		}
+		
+		if (index == ticketList.length) {
+			System.out.println("This seat is available");
+		} else {
+			System.out.println("----------------------------------");
+			ticketList[index].print_ticketInfo();
+			System.out.println("----------------------------------");
 		}
 	}
 	
@@ -207,12 +202,8 @@ public class w2053733_PlaneManagement {
 		planeSeates[2] = new int[12];
 		planeSeates[3] = new int[14];
 		
-		Ticket[][] ticketList = new Ticket[4][];
-		ticketList[0] = new Ticket[14];
-		ticketList[1] = new Ticket[12];
-		ticketList[2] = new Ticket[12];
-		ticketList[3] = new Ticket[14];
-		
+		Ticket[] ticketList = new Ticket[52];
+
 		Scanner input = new Scanner(System.in);
 		
 		System.out.println("! Welcome to the Plane Management application ! \n");
