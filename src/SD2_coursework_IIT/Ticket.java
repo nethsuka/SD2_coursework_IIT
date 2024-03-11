@@ -1,5 +1,6 @@
 package SD2_coursework_IIT;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -70,7 +71,15 @@ public class Ticket {
 		}catch(IOException e) {
 			System.out.println("An error occured");
 		}
-		
-		
+	}
+	
+	public void deleteFile(String rowLetter, int seatNum) {
+		File file = new File(rowLetter+seatNum+".txt");
+		if (file.exists()){
+			file.delete();
+			System.out.println("Ticket file deleted.");
+		}else{
+			System.out.println("File does not exist.");
+		}
 	}
 }
