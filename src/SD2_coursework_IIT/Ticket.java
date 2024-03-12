@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * This class represent the Ticket
+ */
 public class Ticket {
 
 	private String row;
@@ -50,7 +53,7 @@ public class Ticket {
 		this.person = person;
 	}
 	
-	public void print_ticketInfo() {
+	public void print_ticketInfo() {   // Print ticket information
 		System.out.println("Row :"+row);
 		System.out.println("Seat :"+seat);
 		System.out.println("Price :£"+price);
@@ -58,6 +61,12 @@ public class Ticket {
 
 	}
 	
+	
+	/**
+	 * This method write the ticket information to a file
+	 * @param rowLetter - Letter of the seat
+	 * @param seatNum - Number of the seat
+	 */
 	public void save(String rowLetter, int seatNum) {
 		try {
 			FileWriter file = new FileWriter(rowLetter+seatNum+".txt");
@@ -73,6 +82,12 @@ public class Ticket {
 		}
 	}
 	
+	
+	/**
+	 * This method deletes the ticket file when ticket is canceled 
+	 * @param rowLetter - Letter of the seat
+	 * @param seatNum - Number of the seat
+	 */
 	public void deleteFile(String rowLetter, int seatNum) {
 		File file = new File(rowLetter+seatNum+".txt");
 		if (file.exists()){

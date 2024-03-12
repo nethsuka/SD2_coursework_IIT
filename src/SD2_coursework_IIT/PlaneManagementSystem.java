@@ -2,10 +2,25 @@ package SD2_coursework_IIT;
 
 import java.util.Scanner;
 
-public class W2053733_PlaneManagement {
+/**
+ * This class represents the plane management system.
+ */
+
+public class PlaneManagementSystem {
 	
+	/**
+	 * This field represents the index number of the ticket array when adding
+	   a ticket to the ticket array.
+	 */
 	static int ticketArrayIndex = 0;
 	
+	
+	/**
+	 * This method validate the row letter
+	 * @param txt - text to display
+	 * @param input - Scanner object
+	 * @return return a valid row letter from converting to uppercase
+	 */
 	public static String Enter_str(String txt,Scanner input) {
 		while(true) {
 			try {
@@ -25,6 +40,13 @@ public class W2053733_PlaneManagement {
 		}
 	}
 	
+	
+	/**
+	 * This method validate the input whether it's an integer or a sting
+	 * @param txt - text to display
+	 * @param input - Scanner object
+	 * @return it returns a valid integer
+	 */
 	public static int Enter_int(String txt,Scanner input) {
 		while(true) {
 			try {
@@ -37,7 +59,14 @@ public class W2053733_PlaneManagement {
 			}
 		}
 	}
+
 	
+	/**
+	 * This method checks whether the entered seat is valid or invalid
+	 * @param rowLetter - Letter of the row
+	 * @param seatNum - Number of the seat
+	 * @return if the seat position is valid it returns 1 otherwise it returns 0
+	 */
 	public static int isValidSeat(String rowLetter,int seatNum) {
 		if((rowLetter.equals("A") || rowLetter.equals("D")) && 0<seatNum && seatNum<=14) {
 			return 1;
@@ -49,6 +78,16 @@ public class W2053733_PlaneManagement {
 		}
 	}
 	
+	
+	/**
+	 * This method books the seat and get details of the person, then it creates a Ticket
+	   object and to the ticket array
+	 * @param rowLetter - Letter of the row
+	 * @param seatNum - number of the seat
+	 * @param seatList - seat array
+	 * @param ticketList - ticket object array
+	 * @param input - Scanner object
+	 */
 	public static void buy_seat(String rowLetter,int seatNum,int[][] seatList,Ticket[] ticketList,Scanner input) {
 		
 		if(rowLetter.equals("A") && seatList[0][seatNum-1]==0) {
@@ -78,9 +117,9 @@ public class W2053733_PlaneManagement {
 		String email = input.next();
 		System.out.println(); // line break
 		
-		Person person = new Person(name, surname, email);
+		Person person = new Person(name, surname, email);  //person object
 		int price;
-		if(seatNum<=5) {
+		if(seatNum<=5) {   // Getting the seat price
 			price = 200;
 		}else if(seatNum<=9) {
 			price = 150;
@@ -88,14 +127,22 @@ public class W2053733_PlaneManagement {
 			price = 180;
 		}
 		
-		Ticket ticket = new Ticket(rowLetter, seatNum, price, person);
-		ticketList[ticketArrayIndex] = ticket;
+		Ticket ticket = new Ticket(rowLetter, seatNum, price, person);	// ticket object
+		ticketList[ticketArrayIndex] = ticket;	// adding ticket object to array
 		ticketArrayIndex+=1;
 		
-		ticket.save(rowLetter, seatNum);
+		ticket.save(rowLetter, seatNum); // create file and save ticket details
 		
 	}
 	
+	
+	/**
+	 * This method cancel the seat and removes the Ticket object from the ticket array
+	 * @param cancelRowLetter - Letter of the row
+	 * @param cancelSeatNum - Number of the seat
+	 * @param seatList - seat array
+	 * @param ticketList - ticket object array
+	 */
 	public static void cancel_seat(String cancelRowLetter,int cancelSeatNum,int[][] seatList,Ticket[] ticketList) {
 		
 		if(cancelRowLetter.equals("A") && seatList[0][cancelSeatNum-1]==1) {
@@ -125,27 +172,37 @@ public class W2053733_PlaneManagement {
 			index+=1;
 		}
 		
-		ticketList[index].deleteFile(cancelRowLetter, cancelSeatNum);
+		ticketList[index].deleteFile(cancelRowLetter, cancelSeatNum); // delete created ticket file
 		
-		ticketList[index] = null;	
+		ticketList[index] = null;	// remove ticket object
 	}
+
 	
+	/**
+	 * This method use ASCII character system to find the first available seat
+	 * @param seatList - Seat array
+	 */
 	public static void find_first_available(int[][] seatList) {
-		int charNum=65;
+		int charNum=65;  
 		int b=1;
 		for(int[] seatrow: seatList) {
 			for(int seat : seatrow) {
-				char charcter = (char) charNum;
+				char charcter = (char) charNum;  // converting integer to a character
 				if(seat == 0) {
 					System.out.println("The first available seat is row:"+charcter+" seat:"+b+"\n");
 					return;
 				}
 				b+=1;
 			}
-			charNum+=1;
+			charNum+=1; // iterate the character from A to D
 		}
 	}
+
 	
+	/**
+	 * This method show the reserved and non reserved seats in each row
+	 * @param seatList - seat array
+	 */
 	public static void show_seating_plan(int[][] seatList){
 		System.out.println();
 		for(int[] seatrow: seatList) {
@@ -161,6 +218,12 @@ public class W2053733_PlaneManagement {
 		System.out.println();
 	}
 	
+	
+	/**
+	 * This method show the ticket information stored in ticket array
+	 * @param ticketList - Ticket object array
+	 * @see Ticket#print_ticketInfo()
+	 */
 	public static void print_tickets_info(Ticket[] ticketList) {
 		int sumOfTicketPrice = 0;
 		System.out.println();
@@ -178,7 +241,14 @@ public class W2053733_PlaneManagement {
 			System.out.println("\nTotal price of tickets :£"+sumOfTicketPrice+"\n");
 		}
 	}
+
 	
+	/**
+	 * This method check the seat is available or not
+	 * @param rowLetter - Letter of the row
+	 * @param seatNum - Number of the seat
+	 * @param ticketList - Ticket array
+	 */
 	public static void search_ticket(String rowLetter, int seatNum,Ticket[] ticketList) {	
 		int index = 0;
 		for(Ticket item : ticketList) {
@@ -203,13 +273,13 @@ public class W2053733_PlaneManagement {
 	
 	public static void main(String[] args) {
 		
-		int[][] planeSeates = new int[4][];
+		int[][] planeSeates = new int[4][];  // raged seat array
 		planeSeates[0] = new int[14];
 		planeSeates[1] = new int[12];
 		planeSeates[2] = new int[12];
 		planeSeates[3] = new int[14];
 		
-		Ticket[] ticketList = new Ticket[52];
+		Ticket[] ticketList = new Ticket[52];  // Ticket array
 
 		Scanner input = new Scanner(System.in);
 		
@@ -260,8 +330,8 @@ public class W2053733_PlaneManagement {
 				print_tickets_info(ticketList);
 				break;
 			case 6:
-				String searchRowLetter = Enter_str("Enter row letter :",input);
-				int searchSeatNum = Enter_int("Enter seat number :",input);				
+				String searchRowLetter = Enter_str("Enter row letter to search :",input);
+				int searchSeatNum = Enter_int("Enter seat number to search :",input);				
 				int val3 = isValidSeat(searchRowLetter, searchSeatNum);
 				if(val3==1) {
 					search_ticket(searchRowLetter, searchSeatNum, ticketList);

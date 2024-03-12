@@ -1,12 +1,16 @@
 package SD2_coursework_IIT;
 
+
+/**
+ * This class represent the Person
+ */
 public class Person {
 	
 	private String name;
 	private String surname;
 	private String email;
 	
-	public Person(String name, String surname, String email) {
+	public Person(String name, String surname, String email) { // constructor 
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
@@ -36,7 +40,7 @@ public class Person {
 		this.email = email;
 	}
 	
-	public void print_personInfo() {
+	public void print_personInfo() {     // print person's information
 		System.out.println("Name :"+name);
 		System.out.println("Surname :"+surname);
 		System.out.println("Email :"+email);
