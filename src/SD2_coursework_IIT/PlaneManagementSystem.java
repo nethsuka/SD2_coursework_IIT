@@ -236,7 +236,7 @@ public class PlaneManagementSystem {
 		}
 		
 		if(sumOfTicketPrice==0) {
-			System.out.println("There is no ticket information to display.");
+			System.out.println("There is no ticket information to display.\n");
 		}else {
 			System.out.println("\nTotal price of tickets :£"+sumOfTicketPrice+"\n");
 		}
@@ -261,9 +261,9 @@ public class PlaneManagementSystem {
 		}
 		
 		if (index == ticketList.length) {
-			System.out.println("This seat is available\n");
+			System.out.println("\nThis seat is available\n");
 		} else {
-			System.out.println("Sorry this seat is reserved");
+			System.out.println("\nSorry this seat is reserved\n");
 			System.out.println("----------------------------------");
 			ticketList[index].print_ticketInfo();
 			System.out.println("----------------------------------\n");
@@ -283,7 +283,7 @@ public class PlaneManagementSystem {
 
 		Scanner input = new Scanner(System.in);
 		
-		System.out.println("! Welcome to the Plane Management application ! \n");
+		System.out.println("\n! Welcome to the Plane Management application ! \n");
 		
 		boolean status = true;
 		while(status) {
